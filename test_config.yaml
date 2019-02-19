@@ -1,0 +1,33 @@
+schemaVersion: "2.0.0"
+licenseTests:
+- debian: true
+commandTests:
+- name: jre
+  command: java
+  args: ["-version"]
+  expectedError:
+  - "1.8.0_181"
+fileExistenceTests:
+- name: hive-home
+  path: /opt/apache-hive-2.3.4-bin
+  shouldExist: true
+  uid: 1000
+  gid: 1000
+- name: hive-site.xml
+  path: /opt/apache-hive-2.3.4-bin/conf/hive-site.xml
+  shouldExist: true
+- name: log4j2.properties
+  path: /opt/apache-hive-2.3.4-bin/conf/hive-log4j2.properties
+  shouldExist: true
+metadataTest:
+  env:
+  - key: JAVA_HOME
+    value: /usr/lib/jvm/java-8-openjdk-amd64/jre
+  - key: HADOOP_HOME
+    value: /opt/hadoop-2.9.2
+  - key: HIVE_HOME
+    value: /opt/apache-hive-2.3.4-bin
+  exposedPorts: ["9083"]
+  workdir: "/opt/apache-hive-2.3.4-bin"
+  entrypoint: ["bin/hive"]
+  cmd: ["--service", "metastore"]
