@@ -17,6 +17,7 @@ RUN groupadd -r hive --gid=1000 && \
     useradd -r -g hive --uid=1000 -d ${HIVE_HOME} hive && \
     chown hive:hive -R ${HIVE_HOME}
 
+USER hive
 WORKDIR $HIVE_HOME
 EXPOSE 9083
 
