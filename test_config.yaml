@@ -27,6 +27,8 @@ metadataTest:
     value: /opt/hadoop-2.9.2
   - key: HIVE_HOME
     value: /opt/apache-hive-2.3.4-bin
+  - key: HADOOP_CLASSPATH
+    value: "/opt/hadoop-2.9.2/share/hadoop/tools/lib/aws-java-sdk-bundle-1.11.199.jar:/opt/hadoop-2.9.2/share/hadoop/tools/lib/hadoop-aws-2.9.2.jar"
   exposedPorts: ["9083"]
   workdir: "/opt/apache-hive-2.3.4-bin"
   entrypoint: ["bin/hive"]

@@ -5,6 +5,8 @@ WORKDIR /opt
 ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/jre
 ENV HADOOP_HOME=/opt/hadoop-2.9.2
 ENV HIVE_HOME=/opt/apache-hive-2.3.4-bin
+# Include additional jars
+ENV HADOOP_CLASSPATH=/opt/hadoop-2.9.2/share/hadoop/tools/lib/aws-java-sdk-bundle-1.11.199.jar:/opt/hadoop-2.9.2/share/hadoop/tools/lib/hadoop-aws-2.9.2.jar
 
 RUN apt-get update && \
     apt-get -y install curl openjdk-8-jre-headless && \
