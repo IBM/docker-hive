@@ -1,6 +1,4 @@
 schemaVersion: "2.0.0"
-licenseTests:
-- debian: true
 commandTests:
 - name: jre
   command: java
@@ -22,7 +20,7 @@ fileExistenceTests:
 metadataTest:
   env:
   - key: JAVA_HOME
-    value: /usr/lib/jvm/java-8-openjdk-amd64/jre
+    value: /docker-java-home/jre
   - key: HADOOP_HOME
     value: /opt/hadoop-2.9.2
   - key: HIVE_HOME
