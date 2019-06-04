@@ -3,12 +3,12 @@ FROM openjdk:8u181-jre-stretch
 WORKDIR /opt
 
 ENV HADOOP_HOME=/opt/hadoop-2.9.2
-ENV HIVE_HOME=/opt/apache-hive-2.3.4-bin
+ENV HIVE_HOME=/opt/apache-hive-2.3.5-bin
 # Include additional jars
 ENV HADOOP_CLASSPATH=/opt/hadoop-2.9.2/share/hadoop/tools/lib/aws-java-sdk-bundle-1.11.199.jar:/opt/hadoop-2.9.2/share/hadoop/tools/lib/hadoop-aws-2.9.2.jar
 
 RUN apt-get update && \
-    curl -L https://www-us.apache.org/dist/hive/hive-2.3.4/apache-hive-2.3.4-bin.tar.gz | tar zxf - && \
+    curl -L https://www-us.apache.org/dist/hive/hive-2.3.5/apache-hive-2.3.5-bin.tar.gz | tar zxf - && \
     curl -L https://www-us.apache.org/dist/hadoop/common/hadoop-2.9.2/hadoop-2.9.2.tar.gz | tar zxf -
 
 ADD hive-site.xml hive-log4j2.properties ${HIVE_HOME}/conf/
