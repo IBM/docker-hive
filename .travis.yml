@@ -1,0 +1,10 @@
+dist: trusty
+
+services:
+- docker
+
+install:
+    make setup-container-structure-test
+
+script:
+  make build-docker-image test-docker-image
