@@ -11,7 +11,7 @@ RUN apt-get update && \
     curl -L https://www-us.apache.org/dist/hive/hive-2.3.5/apache-hive-2.3.5-bin.tar.gz | tar zxf - && \
     curl -L https://www-us.apache.org/dist/hadoop/common/hadoop-2.9.2/hadoop-2.9.2.tar.gz | tar zxf -
 
-ADD hive-site.xml hive-log4j2.properties ${HIVE_HOME}/conf/
+copy conf ${HIVE_HOME}/conf
 
 RUN groupadd -r hive --gid=1000 && \
     useradd -r -g hive --uid=1000 -d ${HIVE_HOME} hive && \
