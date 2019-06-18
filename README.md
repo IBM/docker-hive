@@ -7,3 +7,5 @@ CD is run through DockerHub in [this repo](https://cloud.docker.com/repository/d
 ```SHELL
 docker build -t "IBM/hive-metastore:master" .
 ```
+
+test
