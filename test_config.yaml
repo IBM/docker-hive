@@ -5,6 +5,11 @@ commandTests:
   args: ["-version"]
   expectedError:
   - "1.8.0_181"
+- name: wget
+  command: apt
+  args: ["list", "wget"]
+  expectedOutput:
+  - "1.18-5\\+deb9u3"
 fileExistenceTests:
 - name: hive-home
   path: /opt/apache-hive-2.3.5-bin
