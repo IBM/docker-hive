@@ -4,7 +4,12 @@ commandTests:
   command: java
   args: ["-version"]
   expectedError:
-  - "1.8.0_181"
+  - "1.8.0_212"
+- name: wget
+  command: apt
+  args: ["list", "wget"]
+  expectedOutput:
+  - "1.18-5\\+deb9u3"
 fileExistenceTests:
 - name: hive-home
   path: /opt/apache-hive-2.3.5-bin
@@ -20,7 +25,7 @@ fileExistenceTests:
 metadataTest:
   env:
   - key: JAVA_HOME
-    value: /docker-java-home/jre
+    value: /usr/local/openjdk-8
   - key: HADOOP_HOME
     value: /opt/hadoop-2.9.2
   - key: HIVE_HOME
