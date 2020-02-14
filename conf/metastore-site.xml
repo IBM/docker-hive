@@ -16,11 +16,7 @@
    </property>
    <property>
       <name>metastore.task.threads.always</name>
-      <value>true</value>
-   </property>
-   <property>
-      <name>metastore.task.threads.always</name>
-      <value>org.apache.hadoop.hive.metastore.events.EventCleanerTask</value>
+      <value>org.apache.hadoop.hive.metastore.events.EventCleanerTask,org.apache.hadoop.hive.metastore.MaterializationsCacheCleanerTask</value>
    </property>
    <property>
       <name>metastore.expression.proxy</name>
