@@ -2,16 +2,17 @@ FROM openjdk:8u212-jre
 
 WORKDIR /opt
 
-ENV HADOOP_HOME=/opt/hadoop-2.9.2
-ENV HIVE_HOME=/opt/apache-hive-2.3.5-bin
+ENV HADOOP_HOME=/opt/hadoop-3.1.3
+ENV HIVE_HOME=/opt/apache-hive-metastore-3.0.0-bin
 # Include additional jars
-ENV HADOOP_CLASSPATH=/opt/hadoop-2.9.2/share/hadoop/tools/lib/aws-java-sdk-bundle-1.11.199.jar:/opt/hadoop-2.9.2/share/hadoop/tools/lib/hadoop-aws-2.9.2.jar
+ENV HADOOP_CLASSPATH=${HADOOP_HOME}/share/hadoop/tools/lib/aws-java-sdk-bundle-1.11.271.jar:${HADOOP_HOME}/share/hadoop/tools/lib/hadoop-aws-3.1.3.jar
 
-RUN apt-get update && \
-    curl -L https://www-us.apache.org/dist/hive/hive-2.3.5/apache-hive-2.3.5-bin.tar.gz | tar zxf - && \
-    curl -L https://www-us.apache.org/dist/hadoop/common/hadoop-2.9.2/hadoop-2.9.2.tar.gz | tar zxf -
+RUN curl -L https://www-us.apache.org/dist/hive/hive-standalone-metastore-3.0.0/hive-standalone-metastore-3.0.0-bin.tar.gz | tar zxf - && \
+    curl -L https://www-us.apache.org/dist/hadoop/common/hadoop-3.1.3/hadoop-3.1.3.tar.gz | tar zxf - && \
+    rm -f ${HIVE_HOME}/lib/guava-19.0.jar && \
+    cp ${HADOOP_HOME}/share/hadoop/common/lib/guava-27.0-jre.jar ${HIVE_HOME}/lib/
 
-COPY conf ${HIVE_HOME}/conf
+COPY conf/metastore-site.xml ${HIVE_HOME}/conf
 
 RUN groupadd -r hive --gid=1000 && \
     useradd -r -g hive --uid=1000 -d ${HIVE_HOME} hive && \
@@ -21,5 +22,4 @@ USER hive
 WORKDIR $HIVE_HOME
 EXPOSE 9083
 
-ENTRYPOINT ["bin/hive"]
-CMD ["--service", "metastore"]
+ENTRYPOINT ["bin/start-metastore"]

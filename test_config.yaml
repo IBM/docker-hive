@@ -12,27 +12,26 @@ commandTests:
   - "1.18-5\\+deb9u3"
 fileExistenceTests:
 - name: hive-home
-  path: /opt/apache-hive-2.3.5-bin
+  path: /opt/apache-hive-metastore-3.0.0-bin
   shouldExist: true
   uid: 1000
   gid: 1000
-- name: hive-site.xml
-  path: /opt/apache-hive-2.3.5-bin/conf/hive-site.xml
+- name: guava-27.0-jre.jar
+  path: /opt/apache-hive-metastore-3.0.0-bin/lib/guava-27.0-jre.jar
   shouldExist: true
-- name: log4j2.properties
-  path: /opt/apache-hive-2.3.5-bin/conf/hive-log4j2.properties
+- name: metastore-site.xml
+  path: /opt/apache-hive-metastore-3.0.0-bin/conf/metastore-site.xml
   shouldExist: true
 metadataTest:
   env:
   - key: JAVA_HOME
     value: /usr/local/openjdk-8
   - key: HADOOP_HOME
-    value: /opt/hadoop-2.9.2
+    value: /opt/hadoop-3.1.3
   - key: HIVE_HOME
-    value: /opt/apache-hive-2.3.5-bin
+    value: /opt/apache-hive-metastore-3.0.0-bin
   - key: HADOOP_CLASSPATH
-    value: "/opt/hadoop-2.9.2/share/hadoop/tools/lib/aws-java-sdk-bundle-1.11.199.jar:/opt/hadoop-2.9.2/share/hadoop/tools/lib/hadoop-aws-2.9.2.jar"
+    value: "/opt/hadoop-3.1.3/share/hadoop/tools/lib/aws-java-sdk-bundle-1.11.271.jar:/opt/hadoop-3.1.3/share/hadoop/tools/lib/hadoop-aws-3.1.3.jar"
   exposedPorts: ["9083"]
-  workdir: "/opt/apache-hive-2.3.5-bin"
-  entrypoint: ["bin/hive"]
-  cmd: ["--service", "metastore"]
+  workdir: "/opt/apache-hive-metastore-3.0.0-bin"
+  entrypoint: ["bin/start-metastore"]
