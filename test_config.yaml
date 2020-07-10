@@ -4,30 +4,30 @@ commandTests:
   command: java
   args: ["-version"]
   expectedError:
-  - "1.8.0_181"
+  - "1.8.0_252"
 fileExistenceTests:
 - name: hive-home
-  path: /opt/apache-hive-2.3.5-bin
+  path: /opt/apache-hive-2.3.7-bin
   shouldExist: true
   uid: 1000
   gid: 1000
 - name: hive-site.xml
-  path: /opt/apache-hive-2.3.5-bin/conf/hive-site.xml
+  path: /opt/apache-hive-2.3.7-bin/conf/hive-site.xml
   shouldExist: true
 - name: log4j2.properties
-  path: /opt/apache-hive-2.3.5-bin/conf/hive-log4j2.properties
+  path: /opt/apache-hive-2.3.7-bin/conf/hive-log4j2.properties
   shouldExist: true
 metadataTest:
   env:
   - key: JAVA_HOME
-    value: /docker-java-home/jre
+    value: /usr/local/openjdk-8
   - key: HADOOP_HOME
     value: /opt/hadoop-2.9.2
   - key: HIVE_HOME
-    value: /opt/apache-hive-2.3.5-bin
+    value: /opt/apache-hive-2.3.7-bin
   - key: HADOOP_CLASSPATH
     value: "/opt/hadoop-2.9.2/share/hadoop/tools/lib/aws-java-sdk-bundle-1.11.199.jar:/opt/hadoop-2.9.2/share/hadoop/tools/lib/hadoop-aws-2.9.2.jar"
   exposedPorts: ["9083"]
-  workdir: "/opt/apache-hive-2.3.5-bin"
+  workdir: "/opt/apache-hive-2.3.7-bin"
   entrypoint: ["bin/hive"]
   cmd: ["--service", "metastore"]
