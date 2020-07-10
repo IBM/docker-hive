@@ -1,4 +1,4 @@
-FROM openjdk:8u181-jre-stretch
+FROM openjdk:8u252-jre
 
 WORKDIR /opt
 
