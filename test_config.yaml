@@ -4,12 +4,12 @@ commandTests:
   command: java
   args: ["-version"]
   expectedError:
-  - "1.8.0_212"
+  - "1.8.0_252"
 - name: wget
   command: apt
   args: ["list", "wget"]
   expectedOutput:
-  - "1.18-5\\+deb9u3"
+  - "1.20.1-1.1"
 fileExistenceTests:
 - name: hive-home
   path: /opt/apache-hive-3.1.2-bin
