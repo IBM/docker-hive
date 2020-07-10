@@ -6,7 +6,7 @@ commandTests:
   expectedError:
   - "1.8.0_252"
 - name: wget
-  command: apt-get
+  command: apt
   args: ["list", "wget"]
   expectedOutput:
   - "1.20.1-1.1"
