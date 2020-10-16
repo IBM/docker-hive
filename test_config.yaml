@@ -4,7 +4,7 @@ commandTests:
   command: java
   args: ["-version"]
   expectedError:
-  - "1.8.0_252"
+  - "1.8.0_265"
 - name: wget
   command: apt
   args: ["list", "wget"]
