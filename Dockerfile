@@ -12,6 +12,8 @@ RUN curl -L https://www-us.apache.org/dist/hive/hive-3.1.2/apache-hive-3.1.2-bin
     rm -f ${HIVE_HOME}/lib/guava-19.0.jar && \
     cp ${HADOOP_HOME}/share/hadoop/common/lib/guava-27.0-jre.jar ${HIVE_HOME}/lib/
 
+RUN apt-get update && apt-get install -y libkrb5-3=1.17-3+deb10u1  libk5crypto3=1.17-3+deb10u1 libsqlite3-0=3.27.2-3+deb10u1
+
 COPY conf/hive-site.xml ${HIVE_HOME}/conf
 
 RUN groupadd -r hive --gid=1000 && \
