@@ -1,4 +1,4 @@
-FROM openjdk:8u265-jre
+FROM openjdk:8u275-jre
 
 WORKDIR /opt
 
