@@ -10,7 +10,7 @@ ENV HADOOP_CLASSPATH=/opt/hadoop-2.9.2/share/hadoop/tools/lib/aws-java-sdk-bundl
 RUN apt-get update && \
     curl -L https://www-us.apache.org/dist/hive/hive-2.3.7/apache-hive-2.3.7-bin.tar.gz | tar zxf - && \
     curl -L https://www-us.apache.org/dist/hadoop/common/hadoop-2.9.2/hadoop-2.9.2.tar.gz | tar zxf - && \
-    apt-get install -y libk5crypto3=1.17-3+deb10u1  libkrb5-3=1.17-3+deb10u1  libsqlite3-0=3.27.2-3+deb10u1 
+    apt-get install -y libk5crypto3 libkrb5-3 libsqlite3-0
 
 COPY conf ${HIVE_HOME}/conf
 
