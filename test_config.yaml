@@ -12,27 +12,27 @@ commandTests:
   - "1.20.1-1.1"
 fileExistenceTests:
 - name: hive-home
-  path: /opt/apache-hive-2.3.7-bin
+  path: /opt/apache-hive-2.3.8-bin
   shouldExist: true
   uid: 1000
   gid: 1000
 - name: hive-site.xml
-  path: /opt/apache-hive-2.3.7-bin/conf/hive-site.xml
+  path: /opt/apache-hive-2.3.8-bin/conf/hive-site.xml
   shouldExist: true
 - name: log4j2.properties
-  path: /opt/apache-hive-2.3.7-bin/conf/hive-log4j2.properties
+  path: /opt/apache-hive-2.3.8-bin/conf/hive-log4j2.properties
   shouldExist: true
 metadataTest:
   env:
   - key: JAVA_HOME
     value: /usr/local/openjdk-8
   - key: HADOOP_HOME
-    value: /opt/hadoop-2.9.2
+    value: /opt/hadoop-2.10.1
   - key: HIVE_HOME
-    value: /opt/apache-hive-2.3.7-bin
+    value: /opt/apache-hive-2.3.8-bin
   - key: HADOOP_CLASSPATH
-    value: "/opt/hadoop-2.9.2/share/hadoop/tools/lib/aws-java-sdk-bundle-1.11.199.jar:/opt/hadoop-2.9.2/share/hadoop/tools/lib/hadoop-aws-2.9.2.jar"
+    value: "/opt/hadoop-2.10.1/share/hadoop/tools/lib/aws-java-sdk-bundle-1.11.199.jar:/opt/hadoop-2.10.1/share/hadoop/tools/lib/hadoop-aws-2.10.1.jar"
   exposedPorts: ["9083"]
-  workdir: "/opt/apache-hive-2.3.7-bin"
+  workdir: "/opt/apache-hive-2.3.8-bin"
   entrypoint: ["bin/hive"]
   cmd: ["--service", "metastore"]
