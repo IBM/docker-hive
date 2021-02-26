@@ -1,4 +1,4 @@
-FROM openjdk:8u275-jre
+FROM azul/zulu-openjdk-debian:11.0.10
 
 WORKDIR /opt
 
@@ -8,8 +8,10 @@ ENV HIVE_HOME=/opt/apache-hive-2.3.8-bin
 ENV HADOOP_CLASSPATH=/opt/hadoop-2.10.1/share/hadoop/tools/lib/aws-java-sdk-bundle-1.11.271.jar:/opt/hadoop-2.10.1/share/hadoop/tools/lib/hadoop-aws-2.10.1.jar
 
 RUN apt-get update && \
+    apt-get -qqy install curl && \
     curl -L https://www-us.apache.org/dist/hive/hive-2.3.8/apache-hive-2.3.8-bin.tar.gz | tar zxf - && \
     curl -L https://www-us.apache.org/dist/hadoop/common/hadoop-2.10.1/hadoop-2.10.1.tar.gz | tar zxf - && \
+    apt-get install --only-upgrade openssl libssl1.1 && \
     apt-get install -y libk5crypto3 libkrb5-3 libsqlite3-0
 
 COPY conf ${HIVE_HOME}/conf
