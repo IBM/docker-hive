@@ -14,6 +14,10 @@ RUN apt-get update && \
     apt-get install --only-upgrade openssl libssl1.1 && \
     apt-get install -y libk5crypto3 libkrb5-3 libsqlite3-0
 
+RUN rm ${HIVE_HOME}/lib/postgresql-9.4.1208.jre7.jar
+
+RUN curl -H "Accept: application/zip" https://jdbc.postgresql.org/download/postgresql-9.4.1212.jre7.jar > ${HIVE_HOME}/lib/postgresql-9.4.1212.jre7.jar
+
 COPY conf ${HIVE_HOME}/conf
 
 RUN groupadd -r hive --gid=1000 && \
