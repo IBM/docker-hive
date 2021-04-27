@@ -16,7 +16,7 @@ RUN apt-get update && \
 
 RUN rm ${HIVE_HOME}/lib/postgresql-9.4.1208.jre7.jar
 
-RUN curl -H "Accept: application/zip" https://jdbc.postgresql.org/download/postgresql-9.4.1212.jre7.jar > ${HIVE_HOME}/lib/postgresql-9.4.1212.jre7.jar
+RUN curl -L https://jdbc.postgresql.org/download/postgresql-9.4.1212.jre7.jar > ${HIVE_HOME}/lib/postgresql-9.4.1212.jre7.jar
 
 COPY conf ${HIVE_HOME}/conf
 
