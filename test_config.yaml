@@ -3,7 +3,7 @@ commandTests:
 - name: jre
   command: java
   args: ["-version"]
-  expectedError: ['openjdk version "11.0.10"*']
+  expectedError: ['openjdk version "11.0.11"*']
 - name: openssl
   command: apt
   args: ["list", "openssl"]
