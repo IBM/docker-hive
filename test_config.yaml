@@ -10,7 +10,7 @@ commandTests:
   expectedOutput: ['.*1.1.1d-0\+deb10u5*.']
 fileExistenceTests:
 - name: hive-home
-  path: /opt/apache-hive-2.3.8-bin
+  path: /opt/apache-hive-2.3.9-bin
   shouldExist: true
   uid: 1000
   gid: 1000
@@ -33,10 +33,10 @@ metadataTest:
   - key: HADOOP_HOME
     value: /opt/hadoop-2.10.1
   - key: HIVE_HOME
-    value: /opt/apache-hive-2.3.8-bin
+    value: /opt/apache-hive-2.3.9-bin
   - key: HADOOP_CLASSPATH
     value: "/opt/hadoop-2.10.1/share/hadoop/tools/lib/aws-java-sdk-bundle-1.11.271.jar:/opt/hadoop-2.10.1/share/hadoop/tools/lib/hadoop-aws-2.10.1.jar"
   exposedPorts: ["9083"]
-  workdir: "/opt/apache-hive-2.3.8-bin"
+  workdir: "/opt/apache-hive-2.3.9-bin"
   entrypoint: ["bin/hive"]
   cmd: ["--service", "metastore"]
