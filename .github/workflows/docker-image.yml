@@ -1,0 +1,27 @@
+name: docker-hive CI
+on:
+  push:
+    paths-ignore:
+      - '**.md'
+  pull_request:
+    paths-ignore:
+      - '**.md'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build the image
+      uses: docker/build-push-action@v2
+      with: 
+        context: .
+        push: false
+        tags: docker-hive:latest
+    
+    - name: run structure tests
+      uses: plexsystems/container-structure-test-action@v0.1.0
+      with:
+        image: docker-hive:latest
+        config: test_config.yaml
+    
