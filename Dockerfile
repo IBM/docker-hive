@@ -8,6 +8,7 @@ ENV HIVE_HOME=/opt/apache-hive-2.3.9-bin
 ENV HADOOP_CLASSPATH=/opt/hadoop-2.10.1/share/hadoop/tools/lib/aws-java-sdk-bundle-1.11.271.jar:/opt/hadoop-2.10.1/share/hadoop/tools/lib/hadoop-aws-2.10.1.jar
 
 RUN apt-get update && \
+    apt-get upgrade -y && \
     apt-get -qqy install curl && \
     curl -L https://dlcdn.apache.org/hive/hive-2.3.9/apache-hive-2.3.9-bin.tar.gz | tar zxf - && \
     curl -L https://dlcdn.apache.org/hadoop/common/hadoop-2.10.1/hadoop-2.10.1.tar.gz | tar zxf - && \
