@@ -13,7 +13,7 @@ RUN apt-get update && \
     curl -L https://dlcdn.apache.org/hive/hive-2.3.9/apache-hive-2.3.9-bin.tar.gz | tar zxf - && \
     curl -L https://dlcdn.apache.org/hadoop/common/hadoop-2.10.1/hadoop-2.10.1.tar.gz | tar zxf - && \
     apt-get install --only-upgrade openssl libssl1.1 && \
-    apt-get install -y libk5crypto3 libkrb5-3 libsqlite3-0
+    apt-get install -y libk5crypto3 libkrb5-3 libsqlite3-0 zip
 
 RUN rm ${HIVE_HOME}/lib/postgresql-9.4.1208.jre7.jar
 
@@ -24,6 +24,8 @@ COPY conf ${HIVE_HOME}/conf
 RUN groupadd -r hive --gid=1000 && \
     useradd -r -g hive --uid=1000 -d ${HIVE_HOME} hive && \
     chown hive:hive -R ${HIVE_HOME}
+
+RUN zip -q -d /opt/hive/lib/log4j-core-*.jar org/apache/logging/log4j/core/lookup/JndiLookup.class
 
 USER hive
 WORKDIR $HIVE_HOME
