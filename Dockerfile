@@ -25,7 +25,7 @@ RUN groupadd -r hive --gid=1000 && \
     useradd -r -g hive --uid=1000 -d ${HIVE_HOME} hive && \
     chown hive:hive -R ${HIVE_HOME}
 
-RUN zip -q -d /opt/hive/lib/log4j-core-*.jar org/apache/logging/log4j/core/lookup/JndiLookup.class
+RUN zip -q -d /opt/apache-hive-*-bin/lib/log4j-core-*.jar org/apache/logging/log4j/core/lookup/JndiLookup.class
 
 USER hive
 WORKDIR $HIVE_HOME
