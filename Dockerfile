@@ -5,7 +5,7 @@ WORKDIR /opt
 ENV HADOOP_HOME=/opt/hadoop-3.3.1
 ENV HIVE_HOME=/opt/apache-hive-3.1.2-bin
 # Include additional jars
-ENV HADOOP_CLASSPATH=/opt/hadoop-2.10.1/share/hadoop/tools/lib/aws-java-sdk-bundle-1.11.271.jar:/opt/hadoop-2.10.1/share/hadoop/tools/lib/hadoop-aws-2.10.1.jar
+ENV HADOOP_CLASSPATH=/opt/hadoop-3.3.1/share/hadoop/tools/lib/aws-java-sdk-bundle-1.12.133.jar:/opt/hadoop-3.3.1/share/hadoop/tools/lib/hadoop-aws-3.3.1.jar
 
 RUN apt-get update && \
     apt-get upgrade -y && \
