@@ -31,6 +31,7 @@ ARG LOG4J_LOCATION="https://repo1.maven.org/maven2/org/apache/logging/log4j"
 RUN \
     rm -f /opt/hadoop-*/share/hadoop/common/lib/log4j-* && \
     rm -f /opt/hadoop-*/share/hadoop/hdfs/lib/log4j-* && \
+    rm -f /opt/hadoop-*/share/hadoop/yarn/hadoop-yarn-applications-catalog-webapp-3.3.1.war && \
     rm -f /opt/apache-hive-*-bin/lib/log4j-* && \
     curl -o ${HIVE_HOME}/lib/log4j-1.2-api-${LOG4J_VERSION}.jar ${LOG4J_LOCATION}/log4j-1.2-api/${LOG4J_VERSION}/log4j-1.2-api-${LOG4J_VERSION}.jar  && \
     curl -o ${HIVE_HOME}/lib/log4j-api-${LOG4J_VERSION}.jar ${LOG4J_LOCATION}/log4j-api/${LOG4J_VERSION}/log4j-api-${LOG4J_VERSION}.jar && \
