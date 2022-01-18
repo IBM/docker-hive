@@ -56,6 +56,6 @@ EXPOSE 9083
 
 # initialize a new empty derby schema (temporary, will probably want to migrate our old one instead)
 RUN ${HIVE_HOME}/bin/schematool -dbType derby -initSchema -verbose
-RUN cd ${HIVE_HOME}/metastore_db && rm *.lck && cd ${HIVE_HOME}
+RUN cd ${HIVE_HOME}/metastore_db && chmod a+rwx . --recursive && rm *.lck && cd ${HIVE_HOME}
 
 ENTRYPOINT ["sh", "/opt/hive/docker-entrypoint.sh"]
