@@ -50,11 +50,11 @@ RUN mkdir -p /var/lib/hive /.beeline ${HOME}/.beeline
 RUN chown -R hive:0 ${HIVE_HOME} ${HADOOP_HOME} /var/lib/hive /.beeline ${HOME}/.beeline /etc/passwd $(readlink -f ${JAVA_HOME}/lib/security/cacerts) && \
     chmod -R u+rwx,g+rwx ${HIVE_HOME} ${HADOOP_HOME} /var/lib/hive /.beeline ${HOME}/.beeline /etc/passwd $(readlink -f ${JAVA_HOME}/lib/security/cacerts)
 
-# initialize a new empty derby schema (temporary, will probably want to migrate our old one instead)
-RUN ${HIVE_HOME}/bin/schematool -dbType derby -initSchema -verbose
-
 USER hive
 WORKDIR $HIVE_HOME
 EXPOSE 9083
+
+# initialize a new empty derby schema (temporary, will probably want to migrate our old one instead)
+RUN ${HIVE_HOME}/bin/schematool -dbType derby -initSchema -verbose
 
 ENTRYPOINT ["sh", "/opt/hive/docker-entrypoint.sh"]
