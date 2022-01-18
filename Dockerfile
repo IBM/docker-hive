@@ -56,6 +56,7 @@ EXPOSE 9083
 
 # initialize a new empty derby schema (temporary, will probably want to migrate our old one instead)
 RUN ${HIVE_HOME}/bin/schematool -dbType derby -initSchema -verbose
+# address https://stackoverflow.com/questions/9713807/how-to-use-hive-with-other-user/19188346 for user hive
 RUN cd ${HIVE_HOME}/metastore_db && chmod a+rwx . --recursive && rm *.lck && cd ${HIVE_HOME}
 
 ENTRYPOINT ["sh", "/opt/hive/docker-entrypoint.sh"]
