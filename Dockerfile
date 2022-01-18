@@ -30,15 +30,15 @@ ARG LOG4J_VERSION=2.17.1
 ARG LOG4J_LOCATION="https://repo1.maven.org/maven2/org/apache/logging/log4j"
 RUN \
     rm -f ${HADOOP_HOME}/share/hadoop/common/lib/slf4j-log4j12* && \
-    rm -f ${METASTORE_HOME}/lib/log4j-* && \
+    rm -f ${HIVE_HOME}/lib/log4j-* && \
     curl -o ${HIVE_HOME}/lib/log4j-1.2-api-${LOG4J_VERSION}.jar ${LOG4J_LOCATION}/log4j-1.2-api/${LOG4J_VERSION}/log4j-1.2-api-${LOG4J_VERSION}.jar  && \
     curl -o ${HIVE_HOME}/lib/log4j-api-${LOG4J_VERSION}.jar ${LOG4J_LOCATION}/log4j-api/${LOG4J_VERSION}/log4j-api-${LOG4J_VERSION}.jar && \
     curl -o ${HIVE_HOME}/lib/log4j-core-${LOG4J_VERSION}.jar ${LOG4J_LOCATION}/log4j-core/${LOG4J_VERSION}/log4j-core-${LOG4J_VERSION}.jar && \
     curl -o ${HIVE_HOME}/lib/log4j-slf4j-impl-${LOG4J_VERSION}.jar ${LOG4J_LOCATION}/log4j-slf4j-impl/${LOG4J_VERSION}/log4j-slf4j-impl-${LOG4J_VERSION}.jar
 
 # Move the default configuration files into the container
-COPY conf/hive-site.xml ${HIVE_HOME}/conf
-COPY conf/hive-log4j2.properties ${HIVE_HOME}/conf
+COPY conf/metastore-site.xml ${HIVE_HOME}/conf
+COPY conf/metastore-log4j2.properties ${HIVE_HOME}/conf
 
 USER hive
 WORKDIR $HIVE_HOME
