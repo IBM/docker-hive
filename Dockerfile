@@ -36,6 +36,10 @@ RUN \
     curl -o ${HIVE_HOME}/lib/log4j-core-${LOG4J_VERSION}.jar ${LOG4J_LOCATION}/log4j-core/${LOG4J_VERSION}/log4j-core-${LOG4J_VERSION}.jar && \
     curl -o ${HIVE_HOME}/lib/log4j-slf4j-impl-${LOG4J_VERSION}.jar ${LOG4J_LOCATION}/log4j-slf4j-impl/${LOG4J_VERSION}/log4j-slf4j-impl-${LOG4J_VERSION}.jar
 
+# Move the default configuration files into the container
+COPY conf/hive-site.xml ${HIVE_HOME}/conf
+COPY conf/hive-log4j2.properties ${HIVE_HOME}/conf
+
 USER hive
 WORKDIR $HIVE_HOME
 EXPOSE 9083
