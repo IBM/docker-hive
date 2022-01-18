@@ -36,9 +36,22 @@ RUN \
     curl -o ${HIVE_HOME}/lib/log4j-core-${LOG4J_VERSION}.jar ${LOG4J_LOCATION}/log4j-core/${LOG4J_VERSION}/log4j-core-${LOG4J_VERSION}.jar && \
     curl -o ${HIVE_HOME}/lib/log4j-slf4j-impl-${LOG4J_VERSION}.jar ${LOG4J_LOCATION}/log4j-slf4j-impl/${LOG4J_VERSION}/log4j-slf4j-impl-${LOG4J_VERSION}.jar
 
+# https://docs.oracle.com/javase/7/docs/technotes/guides/net/properties.html
+# Java caches dns results forever, don't cache dns results forever:
+RUN touch ${JAVA_HOME}/lib/security/java.security
+RUN sed -i '/networkaddress.cache.ttl/d' ${JAVA_HOME}/lib/security/java.security
+RUN sed -i '/networkaddress.cache.negative.ttl/d' ${JAVA_HOME}/lib/security/java.security
+RUN echo 'networkaddress.cache.ttl=0' >> ${JAVA_HOME}/lib/security/java.security
+RUN echo 'networkaddress.cache.negative.ttl=0' >> ${JAVA_HOME}/lib/security/java.security
+
+# imagebuilder expects the directory to be created before VOLUME
+RUN mkdir -p /var/lib/hive /.beeline ${HOME}/.beeline
+# to allow running as non-root
+RUN chown -R hive:0 ${HIVE_HOME} ${HADOOP_HOME} /var/lib/hive /.beeline ${HOME}/.beeline /etc/passwd $(readlink -f ${JAVA_HOME}/lib/security/cacerts) && \
+    chmod -R u+rwx,g+rwx ${HIVE_HOME} ${HADOOP_HOME} /var/lib/hive /.beeline ${HOME}/.beeline /etc/passwd $(readlink -f ${JAVA_HOME}/lib/security/cacerts)
+
 USER hive
 WORKDIR $HIVE_HOME
 EXPOSE 9083
 
-ENTRYPOINT ["bin/hive"]
-CMD ["--service", "metastore"]
+ENTRYPOINT ["sh", "/opt/hive/docker-entrypoint.sh"]
