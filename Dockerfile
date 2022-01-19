@@ -21,10 +21,6 @@ RUN curl -o ${HIVE_HOME}/lib/postgresql-9.4.1212.jre7.jar -L https://jdbc.postgr
 
 COPY conf ${HIVE_HOME}/conf
 
-RUN groupadd -r hive --gid=1000 && \
-    useradd -r -g hive --uid=1000 -d ${HIVE_HOME} hive && \
-    chown hive:hive -R ${HIVE_HOME}
-
 RUN zip -q -d /opt/apache-hive-*-bin/lib/log4j-core-*.jar org/apache/logging/log4j/core/lookup/JndiLookup.class
 ARG LOG4J_VERSION=2.17.1
 ARG LOG4J_LOCATION="https://repo1.maven.org/maven2/org/apache/logging/log4j"
@@ -47,16 +43,14 @@ RUN echo 'networkaddress.cache.negative.ttl=0' >> ${JAVA_HOME}/lib/security/java
 # imagebuilder expects the directory to be created before VOLUME
 RUN mkdir -p /var/lib/hive /.beeline ${HOME}/.beeline
 # to allow running as non-root
-RUN chown -R hive:0 ${HIVE_HOME} ${HADOOP_HOME} /var/lib/hive /.beeline ${HOME}/.beeline /etc/passwd $(readlink -f ${JAVA_HOME}/lib/security/cacerts) && \
+RUN chown -R 1002:0 ${HIVE_HOME} ${HADOOP_HOME} /var/lib/hive /.beeline ${HOME}/.beeline /etc/passwd $(readlink -f ${JAVA_HOME}/lib/security/cacerts) && \
     chmod -R u+rwx,g+rwx ${HIVE_HOME} ${HADOOP_HOME} /var/lib/hive /.beeline ${HOME}/.beeline /etc/passwd $(readlink -f ${JAVA_HOME}/lib/security/cacerts)
 
-USER hive
+USER 1002
 WORKDIR $HIVE_HOME
 EXPOSE 9083
 
-# initialize a new empty derby schema (temporary, will probably want to migrate our old one instead)
+# initialize a new empty derby schema (temporary, will probably want to migrate our old postgres one instead)
 RUN ${HIVE_HOME}/bin/schematool -dbType derby -initSchema -verbose
-# address https://stackoverflow.com/questions/9713807/how-to-use-hive-with-other-user/19188346 for user hive
-RUN cd ${HIVE_HOME}/metastore_db && chmod a+rwx . --recursive && rm *.lck && cd ${HIVE_HOME}
 
 ENTRYPOINT ["sh", "/opt/hive/docker-entrypoint.sh"]
