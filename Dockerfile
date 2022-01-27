@@ -2,16 +2,23 @@ FROM azul/zulu-openjdk-debian:11.0.11
 
 WORKDIR /opt
 
-ENV HADOOP_HOME=/opt/hadoop-3.3.1
-ENV HIVE_HOME=/opt/apache-hive-3.1.2-bin
+ENV HADOOP_HOME=/opt/hadoop
+ENV HADOOP_VERSION=3.3.1
+ENV HIVE_HOME=/opt/hive
+ENV HIVE_VERSION=3.1.2
 # Include additional jars
 ENV HADOOP_CLASSPATH=/opt/hadoop-3.3.1/share/hadoop/tools/lib/aws-java-sdk-bundle-1.12.133.jar:/opt/hadoop-3.3.1/share/hadoop/tools/lib/hadoop-aws-3.3.1.jar
 
-RUN apt-get update && \
+RUN mkdir ${HIVE_HOME}
+RUN mkdir ${HADOOP_HOME}
+RUN apt-get clean && \
+    apt-get update && \
     apt-get upgrade -y && \
     apt-get -qqy install curl && \
-    curl -L https://dlcdn.apache.org/hive/hive-3.1.2/apache-hive-3.1.2-bin.tar.gz | tar zxf - && \
-    curl -L https://dlcdn.apache.org/hadoop/common/hadoop-3.3.1/hadoop-3.3.1.tar.gz | tar zxf - && \
+    curl -L https://dlcdn.apache.org/hive/hive-${HIVE_VERSION}/apache-hive-${HIVE_VERSION}-bin.tar.gz | tar zxf - && \
+    curl -L https://dlcdn.apache.org/hadoop/common/hadoop-${HADOOP_VERSION}/hadoop-${HADOOP_VERSION}.tar.gz | tar zxf - && \
+    mv apache-hive-${HIVE_VERSION}-bin/* ${HIVE_HOME} && \
+    mv hadoop-${HADOOP_VERSION}/* ${HADOOP_HOME} && \
     apt-get install --only-upgrade openssl libssl1.1 && \
     apt-get install -y libk5crypto3 libkrb5-3 libsqlite3-0 zip
 
@@ -21,7 +28,7 @@ RUN curl -o ${HIVE_HOME}/lib/postgresql-9.4.1212.jre7.jar -L https://jdbc.postgr
 
 COPY conf ${HIVE_HOME}/conf
 
-RUN zip -q -d /opt/apache-hive-*-bin/lib/log4j-core-*.jar org/apache/logging/log4j/core/lookup/JndiLookup.class
+RUN zip -q -d ${HIVE_HOME}/lib/log4j-core-*.jar org/apache/logging/log4j/core/lookup/JndiLookup.class
 ARG LOG4J_VERSION=2.17.1
 ARG LOG4J_LOCATION="https://repo1.maven.org/maven2/org/apache/logging/log4j"
 RUN \
