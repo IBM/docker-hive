@@ -59,7 +59,4 @@ USER 1002
 WORKDIR $HIVE_HOME
 EXPOSE 9083
 
-# initialize a new empty derby schema (temporary, will probably want to migrate our old postgres one instead)
-RUN ${HIVE_HOME}/bin/schematool -dbType derby -initSchema -verbose
-
-ENTRYPOINT ["sh", "/opt/hive/entrypoint.sh"]
+ENTRYPOINT ["sh", "-c", "/opt/hive/entrypoint.sh"]
