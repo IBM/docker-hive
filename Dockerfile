@@ -26,6 +26,9 @@ RUN rm ${HIVE_HOME}/lib/postgresql-9.4.1208.jre7.jar
 
 RUN curl -o ${HIVE_HOME}/lib/postgresql-9.4.1212.jre7.jar -L https://jdbc.postgresql.org/download/postgresql-9.4.1212.jre7.jar
 
+# Configure Hadoop AWS Jars to be available to hive
+RUN ln -s ${HADOOP_HOME}/share/hadoop/tools/lib/*aws* ${HIVE_HOME}/lib
+
 COPY conf ${HIVE_HOME}/conf
 COPY scripts/entrypoint.sh ${HIVE_HOME}/entrypoint.sh
 
