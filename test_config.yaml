@@ -13,7 +13,7 @@ fileExistenceTests:
   path: /opt/hive
   shouldExist: true
   uid: 1002
-  gid: 1002
+  gid: 0
 - name: hive-site.xml
   path: /opt/hive/conf/hive-site.xml
   shouldExist: true
@@ -34,8 +34,6 @@ metadataTest:
     value: /opt/hadoop
   - key: HIVE_HOME
     value: /opt/hive
-  - key: HADOOP_CLASSPATH
-    value: "/opt/hadoop/share/hadoop/tools/lib/aws-java-sdk-bundle-1.11.271.jar:/opt/hadoop-2.10.1/share/hadoop/tools/lib/hadoop-aws-2.10.1.jar"
   exposedPorts: ["9083"]
   workdir: "/opt/hive"
   entrypoint: ["bin/hive"]
