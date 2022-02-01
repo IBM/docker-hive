@@ -60,4 +60,4 @@ USER 1002
 WORKDIR $HIVE_HOME
 EXPOSE 9083
 
-# ENTRYPOINT ["sh", "-c", "/opt/hive/entrypoint.sh"]
+ENTRYPOINT ["sh", "-c", "/opt/hive/entrypoint.sh"]
