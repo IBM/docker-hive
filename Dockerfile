@@ -37,6 +37,7 @@ RUN \
     rm -f ${HADOOP_HOME}/share/hadoop/common/lib/slf4j-log4j12* && \
     rm -f ${HADOOP_HOME}/share/hadoop/common/lib/log4j* && \
     rm -f ${HADOOP_HOME}/share/hadoop/hdfs/lib/log4j* && \
+    rm -f ${HADOOP_HOME}/share/hadoop/yarn/hadoop-yarn-applications-catalog-webapp-3.3.1.war && \
     rm -f ${HIVE_HOME}/lib/log4j-* && \
     curl -o ${HIVE_HOME}/lib/log4j-1.2-api-${LOG4J_VERSION}.jar ${LOG4J_LOCATION}/log4j-1.2-api/${LOG4J_VERSION}/log4j-1.2-api-${LOG4J_VERSION}.jar  && \
     curl -o ${HIVE_HOME}/lib/log4j-api-${LOG4J_VERSION}.jar ${LOG4J_LOCATION}/log4j-api/${LOG4J_VERSION}/log4j-api-${LOG4J_VERSION}.jar && \
