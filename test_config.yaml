@@ -37,4 +37,4 @@ metadataTest:
   exposedPorts: ["9083"]
   workdir: "/opt/hive"
   entrypoint: ["sh", "-c", "/opt/hive/entrypoint.sh"]
-  cmd: ["bash"]
+  cmd: []
