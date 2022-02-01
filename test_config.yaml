@@ -15,10 +15,10 @@ fileExistenceTests:
   uid: 1002
   gid: 1002
 - name: hive-site.xml
-  path: /opt/hive/conf/metastore-site.xml
+  path: /opt/hive/conf/hive-site.xml
   shouldExist: true
 - name: log4j2.properties
-  path: /opt/hive/conf/metastore-log4j2.properties
+  path: /opt/hive/conf/hive-log4j2.properties
   shouldExist: true
 - name: aws-java-sdk-bundle-1.11.271.jar
   path: /opt/hadoop/share/hadoop/tools/lib/aws-java-sdk-bundle-1.11.901.jar
