@@ -6,8 +6,6 @@ ENV HADOOP_HOME=/opt/hadoop
 ENV HADOOP_VERSION=3.3.1
 ENV HIVE_HOME=/opt/hive
 ENV HIVE_VERSION=3.1.2
-# Include additional jars
-ENV HADOOP_CLASSPATH=/opt/hadoop-3.3.1/share/hadoop/tools/lib/aws-java-sdk-bundle-1.12.133.jar:/opt/hadoop-3.3.1/share/hadoop/tools/lib/hadoop-aws-3.3.1.jar
 
 RUN mkdir ${HIVE_HOME}
 RUN mkdir ${HADOOP_HOME}
@@ -62,4 +60,4 @@ USER 1002
 WORKDIR $HIVE_HOME
 EXPOSE 9083
 
-ENTRYPOINT ["sh", "-c", "/opt/hive/entrypoint.sh"]
+# ENTRYPOINT ["sh", "-c", "/opt/hive/entrypoint.sh"]

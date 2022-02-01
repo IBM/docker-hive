@@ -12,8 +12,8 @@ fileExistenceTests:
 - name: hive-home
   path: /opt/hive
   shouldExist: true
-  uid: 1000
-  gid: 1000
+  uid: 1002
+  gid: 1002
 - name: hive-site.xml
   path: /opt/hive/conf/metastore-site.xml
   shouldExist: true
@@ -21,17 +21,17 @@ fileExistenceTests:
   path: /opt/hive/conf/metastore-log4j2.properties
   shouldExist: true
 - name: aws-java-sdk-bundle-1.11.271.jar
-  path: /opt/hadoop/share/hadoop/tools/lib/aws-java-sdk-bundle-1.11.271.jar
+  path: /opt/hadoop/share/hadoop/tools/lib/aws-java-sdk-bundle-1.11.901.jar
   shouldExist: true
 - name: hadoop-aws-2.10.1.jar
-  path: /opt/hadoop/share/hadoop/tools/lib/hadoop-aws-2.10.1.jar
+  path: /opt/hadoop/share/hadoop/tools/lib/hadoop-aws-3.3.1.jar
   shouldExist: true
 metadataTest:
   env:
   - key: JAVA_HOME
     value: /usr/lib/jvm/zulu11-ca-amd64
   - key: HADOOP_HOME
-    value: /opt/hadoop-2.10.1
+    value: /opt/hadoop
   - key: HIVE_HOME
     value: /opt/hive
   - key: HADOOP_CLASSPATH
