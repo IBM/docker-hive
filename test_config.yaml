@@ -37,4 +37,4 @@ metadataTest:
   exposedPorts: ["9083"]
   workdir: "/opt/hive"
   entrypoint: ["bin/hive"]
-  cmd: ["--service", "metastore"]
+  cmd: ["bash"]
