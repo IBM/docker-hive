@@ -30,7 +30,7 @@ RUN ln -s ${HADOOP_HOME}/share/hadoop/tools/lib/*aws* ${HIVE_HOME}/lib
 COPY conf ${HIVE_HOME}/conf
 COPY scripts/entrypoint.sh ${HIVE_HOME}/entrypoint.sh
 
-RUN zip -q -d ${HIVE_HOME}/lib/log4j-core-*.jar org/apache/logging/log4j/core/lookup/JndiLookup.class
+# Remove vulnerable Log4j version and install latest
 ARG LOG4J_VERSION=2.17.1
 ARG LOG4J_LOCATION="https://repo1.maven.org/maven2/org/apache/logging/log4j"
 RUN \
