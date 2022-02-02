@@ -18,7 +18,7 @@ RUN apt-get clean && \
     mv apache-hive-${HIVE_VERSION}-bin/* ${HIVE_HOME} && \
     mv hadoop-${HADOOP_VERSION}/* ${HADOOP_HOME} && \
     apt-get install --only-upgrade openssl libssl1.1 && \
-    apt-get install -y libk5crypto3 libkrb5-3 libsqlite3-0 zip
+    apt-get install -y libk5crypto3 libkrb5-3 libsqlite3-0
 
 RUN rm ${HIVE_HOME}/lib/postgresql-9.4.1208.jre7.jar
 
