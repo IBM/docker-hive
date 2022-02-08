@@ -3,11 +3,11 @@ commandTests:
 - name: jre
   command: java
   args: ["-version"]
-  expectedError: ['openjdk version "11.0.11"*']
+  expectedError: ['openjdk version "11.0.12"*']
 - name: openssl
   command: apt
   args: ["list", "openssl"]
-  expectedOutput: ['.*1.1.1d-0\+deb10u5*.']
+  expectedOutput: ['.*1.1.1k-1\+deb11u1*.']
 fileExistenceTests:
 - name: hive-home
   path: /opt/hive
