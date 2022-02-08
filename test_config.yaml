@@ -14,16 +14,16 @@ fileExistenceTests:
   shouldExist: true
   uid: 1002
   gid: 0
-- name: hive-site.xml
+- name: metastore-site.xml
   path: /opt/hive/conf/metastore-site.xml
   shouldExist: true
 - name: log4j2.properties
   path: /opt/hive/conf/metastore-log4j2.properties
   shouldExist: true
-- name: aws-java-sdk-bundle-1.11.271.jar
+- name: aws-java-sdk-bundle-jar
   path: /opt/hadoop/share/hadoop/tools/lib/aws-java-sdk-bundle-1.11.901.jar
   shouldExist: true
-- name: hadoop-aws-2.10.1.jar
+- name: hadoop-aws-jar
   path: /opt/hadoop/share/hadoop/tools/lib/hadoop-aws-3.3.1.jar
   shouldExist: true
 metadataTest:
