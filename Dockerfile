@@ -1,4 +1,4 @@
-FROM azul/zulu-openjdk-debian:17.0.0
+FROM azul/zulu-openjdk-debian:11.0.12
 
 WORKDIR /opt
 
