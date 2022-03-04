@@ -1,4 +1,4 @@
-FROM azul/zulu-openjdk-debian:11.0.12
+FROM azul/zulu-openjdk-debian:17
 
 WORKDIR /opt
 
@@ -27,9 +27,7 @@ RUN curl -o ${HIVE_HOME}/lib/postgresql-9.4.1212.jre7.jar -L https://jdbc.postgr
 # Configure Hadoop AWS Jars to be available to hive
 RUN ln -s ${HADOOP_HOME}/share/hadoop/tools/lib/*aws* ${HIVE_HOME}/lib
 
-COPY conf/metastore-log4j2.properties ${HIVE_HOME}/conf
-COPY conf/metastore-site.xml ${HIVE_HOME}/conf
-COPY conf/pom.xml ./
+COPY conf/* ${HIVE_HOME}/conf
 COPY scripts/entrypoint.sh ${HIVE_HOME}/entrypoint.sh
 
 # Remove vulnerable Log4j version and install latest
@@ -45,9 +43,6 @@ RUN \
     curl -o ${HIVE_HOME}/lib/log4j-api-${LOG4J_VERSION}.jar ${LOG4J_LOCATION}/log4j-api/${LOG4J_VERSION}/log4j-api-${LOG4J_VERSION}.jar && \
     curl -o ${HIVE_HOME}/lib/log4j-core-${LOG4J_VERSION}.jar ${LOG4J_LOCATION}/log4j-core/${LOG4J_VERSION}/log4j-core-${LOG4J_VERSION}.jar && \
     curl -o ${HIVE_HOME}/lib/log4j-slf4j-impl-${LOG4J_VERSION}.jar ${LOG4J_LOCATION}/log4j-slf4j-impl/${LOG4J_VERSION}/log4j-slf4j-impl-${LOG4J_VERSION}.jar
-
-# Patch Hive dependencies using maven
-RUN mvn package
 
 # https://docs.oracle.com/javase/7/docs/technotes/guides/net/properties.html
 # Java caches dns results forever, don't cache dns results forever:
