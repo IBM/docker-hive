@@ -18,7 +18,7 @@ RUN apt-get clean && \
     mv apache-hive-${HIVE_VERSION}-bin/* ${HIVE_HOME} && \
     mv hadoop-${HADOOP_VERSION}/* ${HADOOP_HOME} && \
     apt-get install --only-upgrade openssl libssl1.1 && \
-    apt-get install -y libk5crypto3 libkrb5-3 libsqlite3-0 maven
+    apt-get install -y libk5crypto3 libkrb5-3 libsqlite3-0
 
 RUN rm ${HIVE_HOME}/lib/postgresql-9.4.1208.jre7.jar
 
@@ -27,7 +27,7 @@ RUN curl -o ${HIVE_HOME}/lib/postgresql-9.4.1212.jre7.jar -L https://jdbc.postgr
 # Configure Hadoop AWS Jars to be available to hive
 RUN ln -s ${HADOOP_HOME}/share/hadoop/tools/lib/*aws* ${HIVE_HOME}/lib
 
-COPY conf/* ${HIVE_HOME}/conf
+COPY conf ${HIVE_HOME}/conf
 COPY scripts/entrypoint.sh ${HIVE_HOME}/entrypoint.sh
 
 # Remove vulnerable Log4j version and install latest
