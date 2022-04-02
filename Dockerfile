@@ -20,9 +20,9 @@ RUN apt-get clean && \
     apt-get install --only-upgrade openssl libssl1.1 libexpat1 && \
     apt-get install -y libk5crypto3 libkrb5-3 libsqlite3-0
 
-RUN rm ${HIVE_HOME}/lib/postgresql-9.4.1208.jre7.jar
+RUN rm ${HIVE_HOME}/lib/postgresql-*.jar
 
-RUN curl -o ${HIVE_HOME}/lib/postgresql-42.2.25.jre7.jar -L https://jdbc.postgresql.org/download/postgresql-42.2.25.jre7.jar
+RUN curl -o ${HIVE_HOME}/lib/postgresql-42.3.3.jar -L https://jdbc.postgresql.org/download/postgresql-42.3.3.jar
 
 # Configure Hadoop AWS Jars to be available to hive
 RUN ln -s ${HADOOP_HOME}/share/hadoop/tools/lib/*aws* ${HIVE_HOME}/lib
