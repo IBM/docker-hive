@@ -13,16 +13,20 @@ RUN apt-get clean && \
     apt-get update && \
     apt-get upgrade -y && \
     apt-get -qqy install curl && \
-    curl -L https://dlcdn.apache.org/hive/hive-${HIVE_VERSION}/apache-hive-${HIVE_VERSION}-bin.tar.gz | tar zxf - && \
+    apt-get install --only-upgrade openssl libssl1.1 libexpat1 && \
+    apt-get install -y libk5crypto3 libkrb5-3 libsqlite3-0 && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+RUN curl -L https://dlcdn.apache.org/hive/hive-${HIVE_VERSION}/apache-hive-${HIVE_VERSION}-bin.tar.gz | tar zxf - && \
     curl -L https://dlcdn.apache.org/hadoop/common/hadoop-${HADOOP_VERSION}/hadoop-${HADOOP_VERSION}.tar.gz | tar zxf - && \
     mv apache-hive-${HIVE_VERSION}-bin/* ${HIVE_HOME} && \
     mv hadoop-${HADOOP_VERSION}/* ${HADOOP_HOME} && \
-    apt-get install --only-upgrade openssl libssl1.1 libexpat1 && \
-    apt-get install -y libk5crypto3 libkrb5-3 libsqlite3-0
+    chown -R 1002:0 ${HIVE_HOME} ${HADOOP_HOME} && \
+    chmod -R u+rwx,g+rwx ${HIVE_HOME} ${HADOOP_HOME}
 
-RUN rm ${HIVE_HOME}/lib/postgresql-9.4.1208.jre7.jar
+RUN rm ${HIVE_HOME}/lib/postgresql-*.jar
 
-RUN curl -o ${HIVE_HOME}/lib/postgresql-42.2.25.jre7.jar -L https://jdbc.postgresql.org/download/postgresql-42.2.25.jre7.jar
+RUN curl -o ${HIVE_HOME}/lib/postgresql-42.3.3.jar -L https://jdbc.postgresql.org/download/postgresql-42.3.3.jar
 
 # Configure Hadoop AWS Jars to be available to hive
 RUN ln -s ${HADOOP_HOME}/share/hadoop/tools/lib/*aws* ${HIVE_HOME}/lib
@@ -31,7 +35,7 @@ COPY conf ${HIVE_HOME}/conf
 COPY scripts/entrypoint.sh ${HIVE_HOME}/entrypoint.sh
 
 # Remove vulnerable Log4j version and install latest
-ARG LOG4J_VERSION=2.17.1
+ARG LOG4J_VERSION=2.17.2
 ARG LOG4J_LOCATION="https://repo1.maven.org/maven2/org/apache/logging/log4j"
 RUN \
     rm -f ${HADOOP_HOME}/share/hadoop/common/lib/slf4j-log4j12* && \
@@ -44,7 +48,7 @@ RUN \
     curl -o ${HIVE_HOME}/lib/log4j-core-${LOG4J_VERSION}.jar ${LOG4J_LOCATION}/log4j-core/${LOG4J_VERSION}/log4j-core-${LOG4J_VERSION}.jar && \
     curl -o ${HIVE_HOME}/lib/log4j-slf4j-impl-${LOG4J_VERSION}.jar ${LOG4J_LOCATION}/log4j-slf4j-impl/${LOG4J_VERSION}/log4j-slf4j-impl-${LOG4J_VERSION}.jar
 
-# https://docs.oracle.com/javase/7/docs/technotes/guides/net/properties.html
+# https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/net/doc-files/net-properties.html
 # Java caches dns results forever, don't cache dns results forever:
 RUN touch ${JAVA_HOME}/lib/security/java.security
 RUN sed -i '/networkaddress.cache.ttl/d' ${JAVA_HOME}/lib/security/java.security
@@ -55,8 +59,8 @@ RUN echo 'networkaddress.cache.negative.ttl=0' >> ${JAVA_HOME}/lib/security/java
 # imagebuilder expects the directory to be created before VOLUME
 RUN mkdir -p /var/lib/hive /.beeline ${HOME}/.beeline
 # to allow running as non-root
-RUN chown -R 1002:0 ${HIVE_HOME} ${HADOOP_HOME} /var/lib/hive /.beeline ${HOME}/.beeline /etc/passwd $(readlink -f ${JAVA_HOME}/lib/security/cacerts) && \
-    chmod -R u+rwx,g+rwx ${HIVE_HOME} ${HADOOP_HOME} /var/lib/hive /.beeline ${HOME}/.beeline /etc/passwd $(readlink -f ${JAVA_HOME}/lib/security/cacerts) && \
+RUN chown -R 1002:0 /var/lib/hive /.beeline ${HOME}/.beeline /etc/passwd $(readlink -f ${JAVA_HOME}/lib/security/cacerts) && \
+    chmod -R u+rwx,g+rwx /var/lib/hive /.beeline ${HOME}/.beeline /etc/passwd $(readlink -f ${JAVA_HOME}/lib/security/cacerts) && \
     chown 1002:0 ${HIVE_HOME}/entrypoint.sh && chmod +x ${HIVE_HOME}/entrypoint.sh
 
 USER 1002
