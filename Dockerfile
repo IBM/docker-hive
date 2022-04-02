@@ -44,7 +44,7 @@ RUN \
     curl -o ${HIVE_HOME}/lib/log4j-core-${LOG4J_VERSION}.jar ${LOG4J_LOCATION}/log4j-core/${LOG4J_VERSION}/log4j-core-${LOG4J_VERSION}.jar && \
     curl -o ${HIVE_HOME}/lib/log4j-slf4j-impl-${LOG4J_VERSION}.jar ${LOG4J_LOCATION}/log4j-slf4j-impl/${LOG4J_VERSION}/log4j-slf4j-impl-${LOG4J_VERSION}.jar
 
-# https://docs.oracle.com/javase/7/docs/technotes/guides/net/properties.html
+# https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/net/doc-files/net-properties.html
 # Java caches dns results forever, don't cache dns results forever:
 RUN touch ${JAVA_HOME}/lib/security/java.security
 RUN sed -i '/networkaddress.cache.ttl/d' ${JAVA_HOME}/lib/security/java.security
