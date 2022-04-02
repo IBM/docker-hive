@@ -5,10 +5,10 @@ export HIVE_OPTS="${HIVE_OPTS} --hiveconf metastore.root.logger=${HIVE_LOGLEVEL}
 export PATH=${HIVE_HOME}/bin:${HADOOP_HOME}/bin:$PATH
 
 set +e
-if schematool -dbType postgres -info -verbose; then
+if schematool -dbType derby -info -verbose; then
     echo "Hive metastore schema verified."
 else
-    if schematool -dbType postgres -initSchema -verbose; then
+    if schematool -dbType derby -initSchema -verbose; then
         echo "Hive metastore schema created."
     else
         echo "Error creating hive metastore: $?"
@@ -16,4 +16,4 @@ else
 fi
 set -e
 
-start-metastore
+hive --service metastore

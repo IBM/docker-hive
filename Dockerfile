@@ -13,12 +13,16 @@ RUN apt-get clean && \
     apt-get update && \
     apt-get upgrade -y && \
     apt-get -qqy install curl && \
-    curl -L https://dlcdn.apache.org/hive/hive-${HIVE_VERSION}/apache-hive-${HIVE_VERSION}-bin.tar.gz | tar zxf - && \
+    apt-get install --only-upgrade openssl libssl1.1 libexpat1 && \
+    apt-get install -y libk5crypto3 libkrb5-3 libsqlite3-0 && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+RUN curl -L https://dlcdn.apache.org/hive/hive-${HIVE_VERSION}/apache-hive-${HIVE_VERSION}-bin.tar.gz | tar zxf - && \
     curl -L https://dlcdn.apache.org/hadoop/common/hadoop-${HADOOP_VERSION}/hadoop-${HADOOP_VERSION}.tar.gz | tar zxf - && \
     mv apache-hive-${HIVE_VERSION}-bin/* ${HIVE_HOME} && \
     mv hadoop-${HADOOP_VERSION}/* ${HADOOP_HOME} && \
-    apt-get install --only-upgrade openssl libssl1.1 libexpat1 && \
-    apt-get install -y libk5crypto3 libkrb5-3 libsqlite3-0
+    chown -R 1002:0 ${HIVE_HOME} ${HADOOP_HOME} && \
+    chmod -R u+rwx,g+rwx ${HIVE_HOME} ${HADOOP_HOME}
 
 RUN rm ${HIVE_HOME}/lib/postgresql-*.jar
 
@@ -55,8 +59,8 @@ RUN echo 'networkaddress.cache.negative.ttl=0' >> ${JAVA_HOME}/lib/security/java
 # imagebuilder expects the directory to be created before VOLUME
 RUN mkdir -p /var/lib/hive /.beeline ${HOME}/.beeline
 # to allow running as non-root
-RUN chown -R 1002:0 ${HIVE_HOME} ${HADOOP_HOME} /var/lib/hive /.beeline ${HOME}/.beeline /etc/passwd $(readlink -f ${JAVA_HOME}/lib/security/cacerts) && \
-    chmod -R u+rwx,g+rwx ${HIVE_HOME} ${HADOOP_HOME} /var/lib/hive /.beeline ${HOME}/.beeline /etc/passwd $(readlink -f ${JAVA_HOME}/lib/security/cacerts) && \
+RUN chown -R 1002:0 /var/lib/hive /.beeline ${HOME}/.beeline /etc/passwd $(readlink -f ${JAVA_HOME}/lib/security/cacerts) && \
+    chmod -R u+rwx,g+rwx /var/lib/hive /.beeline ${HOME}/.beeline /etc/passwd $(readlink -f ${JAVA_HOME}/lib/security/cacerts) && \
     chown 1002:0 ${HIVE_HOME}/entrypoint.sh && chmod +x ${HIVE_HOME}/entrypoint.sh
 
 USER 1002
