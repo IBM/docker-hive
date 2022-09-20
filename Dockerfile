@@ -3,9 +3,11 @@ FROM azul/zulu-openjdk-debian:17
 WORKDIR /opt
 
 ENV HADOOP_HOME=/opt/hadoop
-ENV HADOOP_VERSION=3.3.1
+ENV HADOOP_VERSION=3.3.4
 ENV HIVE_HOME=/opt/hive
-ENV HIVE_VERSION=3.1.2
+ENV HIVE_VERSION=3.1.3
+ENV LOG4J_VERSION=2.19.0
+ENV LOG4J_LOCATION="https://repo1.maven.org/maven2/org/apache/logging/log4j"
 
 RUN mkdir ${HIVE_HOME}
 RUN mkdir ${HADOOP_HOME}
@@ -31,8 +33,6 @@ COPY conf ${HIVE_HOME}/conf
 COPY scripts/entrypoint.sh ${HIVE_HOME}/entrypoint.sh
 
 # Remove vulnerable Log4j version and install latest
-ARG LOG4J_VERSION=2.17.1
-ARG LOG4J_LOCATION="https://repo1.maven.org/maven2/org/apache/logging/log4j"
 RUN \
     rm -f ${HADOOP_HOME}/share/hadoop/common/lib/slf4j-log4j12* && \
     rm -f ${HADOOP_HOME}/share/hadoop/common/lib/log4j* && \
