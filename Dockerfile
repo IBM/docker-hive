@@ -64,7 +64,8 @@ RUN curl -L https://dlcdn.apache.org/hive/hive-${HIVE_VERSION}/apache-hive-${HIV
     # curl -o ${HIVE_HOME}/lib/postgresql-42.2.25.jre7.jar -L https://jdbc.postgresql.org/download/postgresql-42.2.25.jre7.jar && \
     curl -o ${HIVE_HOME}/lib/gcs-connector-hadoop3-${HADOOP_CONNECTORS_VERSION}-shaded.jar -L https://github.com/GoogleCloudDataproc/hadoop-connectors/releases/download/v${HADOOP_CONNECTORS_VERSION}/gcs-connector-hadoop3-${HADOOP_CONNECTORS_VERSION}-shaded.jar && \
     ln -s ${HIVE_HOME}/lib/gcs-connector-hadoop3-${HADOOP_CONNECTORS_VERSION}-shaded.jar /opt/hadoop/share/hadoop/common/gcs-connector-hadoop3-${HADOOP_CONNECTORS_VERSION}-shaded.jar && \
-    curl -o ${HIVE_HOME}/lib/postgres-socket-factory-${CLOUD_SQL_VERSION}-jar-with-driver-and-dependencies.jar -L https://storage.googleapis.com/cloud-sql-java-connector/v${CLOUD_SQL_VERSION}/postgres-socket-factory-${CLOUD_SQL_VERSION}-jar-with-driver-and-dependencies.jar && \
+    # curl -o ${HIVE_HOME}/lib/postgres-socket-factory-${CLOUD_SQL_VERSION}-jar-with-driver-and-dependencies.jar -L https://storage.googleapis.com/cloud-sql-java-connector/v${CLOUD_SQL_VERSION}/postgres-socket-factory-${CLOUD_SQL_VERSION}-jar-with-driver-and-dependencies.jar && \
+    curl -o ${HIVE_HOME}/lib/postgresql-42.2.25.jre7.jar -L https://jdbc.postgresql.org/download/postgresql-42.2.25.jre7.jar && \
     # Configure Hadoop AWS Jars to be available to hive
     # ln -s ${HADOOP_HOME}/share/hadoop/tools/lib/*aws* ${HIVE_HOME}/lib && \
     # Remove vulnerable Log4j version and install latest
