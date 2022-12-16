@@ -1,27 +1,90 @@
 name: docker-hive CI
 on:
+  schedule:
+    - cron: '34 8 * * *'
   push:
+    branches: [ main ]
+    # Publish semver tags as releases.
+    tags: [ 'v*.*.*' ]
     paths-ignore:
       - '**.md'
   pull_request:
+    branches: [ main ]
     paths-ignore:
       - '**.md'
+
+env:
+  # Use docker.io for Docker Hub if empty
+  REGISTRY: ghcr.io
+  # github.repository as <account>/<repo>
+  IMAGE_NAME: ${{ github.repository }}
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+      # This is used to complete the identity challenge
+      # with sigstore/fulcio when running outside of PRs.
+      id-token: write
+      # Required for codeql upload
+      security-events: write
+      # Required for codeql in private repos
+      actions: read
     steps:
-    - uses: actions/checkout@v2
-    - name: Build the image
-      uses: docker/build-push-action@v2
-      with: 
-        context: .
-        push: false
-        tags: docker-hive:latest
-    
-    - name: run structure tests
-      uses: plexsystems/container-structure-test-action@v0.1.0
-      with:
-        image: docker-hive:latest
-        config: test_config.yaml
-    
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Workaround: https://github.com/docker/build-push-action/issues/461
+      - name: Setup Docker buildx
+        uses: docker/setup-buildx-action@v2
+
+      # Login against a Docker registry except on PR
+      # https://github.com/docker/login-action
+      - name: Log into registry ${{ env.REGISTRY }}
+        if: github.event_name != 'pull_request'
+        uses: docker/login-action@v2
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      # Extract metadata (tags, labels) for Docker
+      # https://github.com/docker/metadata-action
+      - name: Extract Docker metadata
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=schedule
+            type=ref,event=branch
+            type=ref,event=tag
+            type=ref,event=pr
+            type=sha
+
+      # Build and push Docker image with Buildx (don't push on PR)
+      # https://github.com/docker/build-push-action
+      - name: Build and push Docker image
+        id: build-and-push
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+      # Scan with trivy and import sarif
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@0.7.1
+        with:
+          image-ref: "${{ fromJSON(steps.meta.outputs.json).tags[1] }}"
+          format: "sarif"
+          output: "trivy-results.sarif"
+        if: github.event_name == 'push'
+
+      - name: Upload Trivy scan results to GitHub Security tab
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: "trivy-results.sarif"
+        if: github.event_name == 'push'
