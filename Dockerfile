@@ -63,6 +63,7 @@ RUN curl -L https://dlcdn.apache.org/hive/hive-${HIVE_VERSION}/apache-hive-${HIV
     rm ${HIVE_HOME}/lib/postgresql-9.4.1208.jre7.jar && \
     # curl -o ${HIVE_HOME}/lib/postgresql-42.2.25.jre7.jar -L https://jdbc.postgresql.org/download/postgresql-42.2.25.jre7.jar && \
     curl -o ${HIVE_HOME}/lib/gcs-connector-hadoop3-${HADOOP_CONNECTORS_VERSION}-shaded.jar -L https://github.com/GoogleCloudDataproc/hadoop-connectors/releases/download/v${HADOOP_CONNECTORS_VERSION}/gcs-connector-hadoop3-${HADOOP_CONNECTORS_VERSION}-shaded.jar && \
+    ln -s ${HIVE_HOME}/lib/gcs-connector-hadoop3-${HADOOP_CONNECTORS_VERSION}-shaded.jar /opt/hadoop/share/hadoop/common/gcs-connector-hadoop3-${HADOOP_CONNECTORS_VERSION}-shaded.jar
     curl -o ${HIVE_HOME}/lib/postgres-socket-factory-${CLOUD_SQL_VERSION}-jar-with-driver-and-dependencies.jar -L https://storage.googleapis.com/cloud-sql-java-connector/v${CLOUD_SQL_VERSION}/postgres-socket-factory-${CLOUD_SQL_VERSION}-jar-with-driver-and-dependencies.jar && \
     # Configure Hadoop AWS Jars to be available to hive
     # ln -s ${HADOOP_HOME}/share/hadoop/tools/lib/*aws* ${HIVE_HOME}/lib && \
@@ -81,6 +82,9 @@ RUN curl -L https://dlcdn.apache.org/hive/hive-${HIVE_VERSION}/apache-hive-${HIV
 
 COPY conf ${HIVE_HOME}/conf
 COPY scripts/entrypoint.sh ${HIVE_HOME}/entrypoint.sh
+
+RUN rm /opt/hadoop/etc/hadoop/core-site.xml && \
+    ln -s /opt/hive/conf/hive-site.xml /opt/hadoop/etc/hadoop/core-site.xml
 
 # to allow running as non-root
 # RUN chown -R hive:hive ${HIVE_HOME} ${HADOOP_HOME} /var/lib/hive /.beeline ${HOME}/.beeline /etc/passwd $(readlink -f ${JAVA_HOME}/lib/security/cacerts) && \
