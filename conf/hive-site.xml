@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<configuration>
+  <property>
+    <name>hive.metastore.schema.verification</name>
+    <value>true</value>
+  </property>
+  <property>
+    <name>hive.users.in.admin.role</name>
+    <value>hive</value>
+  </property>
+    <property>
+        <name>tez.runtime.optimize.local.fetch</name>
+        <value>true</value>
+    </property>
+    <property>
+        <name>hive.exec.submit.local.task.via.child</name>
+        <value>false</value>
+    </property>
+    <property>
+        <name>mapreduce.framework.name</name>
+        <value>local</value>
+    </property>
+    <property>
+        <name>tez.local.mode</name>
+        <value>true</value>
+    </property>
+    <property>
+        <name>hive.execution.engine</name>
+        <value>tez</value>
+    </property>
+    <property>
+        <name>metastore.warehouse.dir</name>
+        <value>/opt/hive/data/warehouse</value>
+    </property>
+    <property>
+        <name>metastore.metastore.event.db.notification.api.auth</name>
+        <value>false</value>
+    </property>
+</configuration>
