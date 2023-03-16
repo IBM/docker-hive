@@ -6,7 +6,7 @@ ENV HADOOP_HOME=/opt/hadoop
 ENV HADOOP_VERSION=3.3.4
 ENV HIVE_HOME=/opt/hive
 ENV HIVE_VERSION=3.1.3
-ENV LOG4J_VERSION=2.19.0
+ENV LOG4J_VERSION=2.20.0
 ENV LOG4J_LOCATION="https://repo1.maven.org/maven2/org/apache/logging/log4j"
 
 RUN mkdir ${HIVE_HOME}

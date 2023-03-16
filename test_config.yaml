@@ -3,7 +3,7 @@ commandTests:
 - name: jre
   command: java
   args: ["-version"]
-  expectedError: ['openjdk version "17.0.4"*']
+  expectedError: ['openjdk version "17.0.6"*']
 - name: openssl
   command: apt
   args: ["list", "openssl"]
@@ -29,7 +29,7 @@ fileExistenceTests:
 metadataTest:
   env:
   - key: JAVA_HOME
-    value: /usr/lib/jvm/zulu17-ca-amd64
+    value: /usr/lib/jvm/zulu17
   - key: HADOOP_HOME
     value: /opt/hadoop
   - key: HIVE_HOME
