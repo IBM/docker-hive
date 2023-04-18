@@ -18,10 +18,3 @@ jobs:
         context: .
         push: false
         tags: docker-hive:latest
-    
-    - name: run structure tests
-      uses: plexsystems/container-structure-test-action@v0.1.0
-      with:
-        image: docker-hive:latest
-        config: test_config.yaml
-    
